@@ -1,9 +1,28 @@
 import sqlite3
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(
+    title="Patient Management API",
+    summary="A beginner backend API for managing patient records",
+    description="""
+A FastAPI + SQLite project that supports creating, reading, updating, and deleting patient records.
 
+Built as a healthcare-focused backend project while transitioning into software engineering.
+""",
+    version="1.0.0"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Connect to SQLite database
 conn = sqlite3.connect("patients.db", check_same_thread=False)
 cursor = conn.cursor()
