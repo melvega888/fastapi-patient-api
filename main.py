@@ -1,7 +1,7 @@
 import sqlite3
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI(
     title="Patient Management API",
@@ -13,6 +13,7 @@ Built as a healthcare-focused backend project while transitioning into software 
 """,
     version="1.0.0"
 )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -23,6 +24,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # Connect to SQLite database
 conn = sqlite3.connect("patients.db", check_same_thread=False)
 cursor = conn.cursor()
@@ -31,6 +33,7 @@ cursor = conn.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS patients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mrn TEXT NOT NULL,
     name TEXT NOT NULL,
     age INTEGER NOT NULL
 )
@@ -39,12 +42,18 @@ conn.commit()
 
 # Pydantic model for request validation
 class Patient(BaseModel):
+    mrn: str
     name: str
     age: int
 
 # Helper function to convert a database row into a dictionary
 def row_to_dict(row):
-    return {"id": row[0], "name": row[1], "age": row[2]}
+    return {
+        "id": row[0],
+        "mrn": row[1],
+        "name": row[2],
+        "age": row[3]
+    }
 
 # Helper function to get a patient or raise 404
 def get_patient_or_404(patient_id: int):
@@ -60,8 +69,8 @@ def get_patient_or_404(patient_id: int):
 @app.post("/patients")
 def add_patient(patient: Patient):
     cursor.execute(
-        "INSERT INTO patients (name, age) VALUES (?, ?)",
-        (patient.name, patient.age)
+        "INSERT INTO patients (mrn, name, age) VALUES (?, ?, ?)",
+        (patient.mrn, patient.name, patient.age)
     )
     conn.commit()
     patient_id = cursor.lastrowid
@@ -70,6 +79,7 @@ def add_patient(patient: Patient):
         "message": "Patient added",
         "patient": {
             "id": patient_id,
+            "mrn": patient.mrn,
             "name": patient.name,
             "age": patient.age
         }
@@ -94,8 +104,8 @@ def update_patient(patient_id: int, patient: Patient):
     get_patient_or_404(patient_id)
 
     cursor.execute(
-        "UPDATE patients SET name = ?, age = ? WHERE id = ?",
-        (patient.name, patient.age, patient_id)
+        "UPDATE patients SET mrn = ?, name = ?, age = ? WHERE id = ?",
+        (patient.mrn, patient.name, patient.age, patient_id)
     )
     conn.commit()
 
@@ -103,6 +113,7 @@ def update_patient(patient_id: int, patient: Patient):
         "message": "Patient updated",
         "patient": {
             "id": patient_id,
+            "mrn": patient.mrn,
             "name": patient.name,
             "age": patient.age
         }
