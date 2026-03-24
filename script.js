@@ -12,12 +12,16 @@ async function loadPatients() {
 
     patients.forEach(patient => {
       const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${patient.name}</strong>
-        (MRN: ${patient.mrn}, Age: ${patient.age}, ID: ${patient.id})
-        <button onclick="editPatient(${patient.id}, '${patient.mrn}', '${patient.name}', ${patient.age})">Edit</button>
-        <button class="delete-btn" onclick="deletePatient(${patient.id})">Delete</button>
-      `;
+li.innerHTML = `
+  <div class="patient-info">
+    <div class="patient-name">${patient.name}</div>
+    <div class="patient-meta">MRN: ${patient.mrn} | Age: ${patient.age} | ID: ${patient.id}</div>
+  </div>
+  <div class="patient-actions">
+    <button class="edit-btn" onclick="editPatient(${patient.id}, '${patient.mrn}', '${patient.name}', ${patient.age})">Edit</button>
+    <button class="delete-btn" onclick="deletePatient(${patient.id})">Delete</button>
+  </div>
+`;
       patientList.appendChild(li);
     });
   } catch (error) {
