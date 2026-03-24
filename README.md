@@ -48,3 +48,4 @@ http://127.0.0.1:8000/docs
 
 ## Preview
 <img src="screenshot_app.png" width="600">
+<img src="screenshot_app-finished.png" width="600">
