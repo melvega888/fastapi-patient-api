@@ -1,22 +1,49 @@
-# FastAPI Patient API
+# Full-Stack Patient Management Application (FastAPI + JavaScript)
 
 ## Description
-This project is a beginner-friendly FastAPI application that simulates a simple patient database with full CRUD functionality. As a healthcare professional transitioning into tech, I wanted to build something that reflects real-world clinical workflows while learning backend development.
+This project is a full-stack patient management application built using FastAPI, SQLite, HTML, CSS, and JavaScript. It simulates a simplified electronic medical record (EMR) system with full CRUD functionality.
 
-The goal of this project is to manage patient data in a structured way, similar to how electronic medical record (EMR) systems handle patient information.
+As a healthcare professional transitioning into tech, I wanted to build something that reflects real-world clinical workflows while learning both backend and frontend development. This project focuses on managing patient data in a structured and user-friendly way.
+
+---
 
 ## Features
 - Create a new patient record
-- View all patients
-- View a single patient by ID
-- Update patient information
-- Delete a patient record
+- View all patients in a dynamic UI
+- View a single patient by ID (API)
+- Update patient information (including MRN)
+- Delete a patient record with confirmation
+- Real-time UI updates using JavaScript (no page reload)
+
+---
 
 ## Tech Stack
+**Backend**
 - Python
 - FastAPI
+- SQLite
+- Pydantic
+
+**Frontend**
+- HTML
+- CSS
+- JavaScript (Fetch API)
+
+**Other Tools**
 - Uvicorn
-- Pydantic (for data validation)
+- Git & GitHub
+
+---
+
+## Key Concepts Demonstrated
+- REST API design (CRUD endpoints)
+- Frontend ↔ Backend communication (Fetch API)
+- CORS configuration
+- State management (edit vs create mode)
+- Data modeling using MRN vs internal database ID
+- Dynamic UI rendering with JavaScript
+
+---
 
 ## Installation
 
@@ -41,7 +68,17 @@ Run the API server:
 uvicorn main:app --reload
 ```
 
-Open your browser and go to webpage:
+In a separate terminal:
+
+```bash
+python3 -m http.server 5500
+```
+
+Open your browser and go to webpage(frontend):
+
+http://127.0.0.1:5500/index.html
+
+Open your browser and go to webpage(backend):
 
 http://127.0.0.1:8000/docs
 
@@ -49,3 +86,4 @@ http://127.0.0.1:8000/docs
 ## Preview
 <img src="screenshot_app.png" width="600">
 <img src="screenshot_app-finished.png" width="600">
+  
