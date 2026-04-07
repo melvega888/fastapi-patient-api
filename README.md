@@ -5,6 +5,10 @@ This project is a full-stack patient management application built using FastAPI,
 
 As a healthcare professional transitioning into tech, I wanted to build something that reflects real-world clinical workflows while learning both backend and frontend development. This project focuses on managing patient data in a structured and user-friendly way.
 
+This project simulates core functionality of an electronic health record (EHR) system, including patient registration, data retrieval, and basic workflow management.
+
+It was built to better understand how backend systems support clinical workflows and how data is structured and accessed in healthcare environments.
+
 ---
 
 ## Features
